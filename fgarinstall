@@ -1,0 +1,22 @@
+#! /bin/sh
+
+##Set repos to correct sources.
+curl
+https://repogen.simplylinux.ch/txt/xenial/sources_d5ac34000894660acfcd90df104af1f015d54a1d.txt
+|
+sudo tee /etc/apt/sources.list
+
+##Update packages and upgrade.
+apt update && apt upgrade -y
+
+##Autoinstall proprietary drivers.
+sudo ubuntu-drivers autoinstall
+
+##Disable eth0 for WiFi testing.
+ifup eth0 down
+
+##Connect to freegeek SSID.
+nmcli dev wifi connect <freegeek2> password <@freegeek>
+
+##Open youtube.com/simonscat in Firefox.
+firefox www.youtube.com/simonscat
