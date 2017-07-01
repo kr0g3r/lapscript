@@ -16,7 +16,7 @@ for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmc
 nmcli dev wifi connect 'freegeek2' password '@freegeek'
 
 ##Open youtube.com/simonscat in Firefox.
-firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
+nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
 
 ##Run inxi to get system info for certification.
 inxi -b
