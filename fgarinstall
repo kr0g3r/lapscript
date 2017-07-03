@@ -1,5 +1,8 @@
 #! /bin/sh
 
+##Set dpms off to keep screen on.
+xset -dpms force off
+
 ##Set repos to correct sources.
 curl https://repogen.simplylinux.ch/txt/xenial/sources_d5ac34000894660acfcd90df104af1f015d54a1d.txt | sudo tee /etc/apt/sources.list
 
@@ -22,5 +25,7 @@ nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
 inxi -b
 
 ##Enable wired networking.
-
 for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device connect $devices;done
+
+##Set dpms back on as normal.
+xset -dpms force on
