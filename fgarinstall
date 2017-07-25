@@ -1,7 +1,7 @@
 #! /bin/sh
 
 ##Set dpms off to keep screen on.
-xset -dpms force off
+xset -dpms
 
 ##Set repos to correct sources.
 curl https://repogen.simplylinux.ch/txt/xenial/sources_d5ac34000894660acfcd90df104af1f015d54a1d.txt | sudo tee /etc/apt/sources.list
@@ -11,6 +11,9 @@ apt update && apt upgrade -y && sudo apt install inxi -y
 
 ##Autoinstall proprietary drivers.
 sudo ubuntu-drivers autoinstall
+
+##Install xorg and kernel from LTS hardware enablement
+apt install --install-recommends -y xserver-xorg-hwe-16.04
 
 ##Disable eth0 for WiFi testing.
 for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device disconnect $devices;done
@@ -28,7 +31,8 @@ inxi -b
 for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device connect $devices;done
 
 ##Set dpms back on as normal.
-xset -dpms force on
+xset +dpms
 
-##Install xorg and kernel from LTS hardware enablement
-apt install --install-recommends -y xserver-xorg-hwe-16.04
+##Print inxi to thermal for specs.
+inxi -bc 0 | lp -d Epson-TM-BA-Thermal
+
