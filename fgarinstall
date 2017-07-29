@@ -1,10 +1,13 @@
 #! /bin/sh
 
-##Set timout of sudo to 0.
-sudo echo "Default passwd_timeout=0" >> /etc/sudoers.d/01_no_timeout
+##Set timeout of sudo to 0.
+sudo 'echo "Default passwd_timeout=0" >> /etc/sudoers.d/01_no_timeout'
 
 ##Set dpms off to keep screen on.
 xset -dpms
+
+##Disable Unity lock
+gsettings set org.gnome.desktop.screensaver lock-enabled false
 
 ##Enable wired networking.
 for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device connect $devices;done
@@ -37,11 +40,15 @@ nmcli dev wifi connect 'freegeek2' password '@freegeek'
 ##Open youtube.com/simonscat in Firefox.
 nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
 
-##Clean up sudo timeout
+##Clean up sudo timeout and nohup.out
 sudo rm /etc/sudoers.d/01_no_timeout
+rm /home/freegeek/nohup.out
 
 ##Set dpms back on as normal.
 xset +dpms
+
+##Enable Unity lock.
+gsettings set org.gnome.desktop.screensaver lock-enabled true
 
 ##Print inxi to thermal for specs.
 inxi -bc 0 | lp -d Epson-TM-BA-Thermal
