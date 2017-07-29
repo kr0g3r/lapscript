@@ -13,7 +13,9 @@ for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmc
 sudo curl https://repogen.simplylinux.ch/txt/xenial/sources_d5ac34000894660acfcd90df104af1f015d54a1d.txt | sudo tee /etc/apt/sources.list
 
 ##Update packages and upgrade install hw info tool.
-sudo apt update && sudo apt upgrade -y && sudo apt install inxi -y
+sudo apt update
+sudo apt upgrade -y
+sudo apt install inxi -y
 
 ##Autoinstall proprietary drivers.
 sudo ubuntu-drivers autoinstall
@@ -21,9 +23,13 @@ sudo ubuntu-drivers autoinstall
 ##Install xorg and kernel from LTS hardware enablement
 sudo apt install --install-recommends -y xserver-xorg-hwe-16.04
 
-#TODO check for wifi flags and make this happen ony when you give a "-w ESSID passphrase"
 ##Disable eth0 for WiFi testing.
-for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device disconnect $devices;done
+foo=$(nmcli dev wifi list | wc -l)
+if [ ! -z $foo ]; then
+    if [ $foo -gt 0 ]; then
+        for devices in $(ip -o link show|grep ether| grep ' UP '| cut -d':' -f2); do nmcli device disconnect $devices;done
+    fi
+fi
 
 ##Connect to freegeek SSID.
 nmcli dev wifi connect 'freegeek2' password '@freegeek'
