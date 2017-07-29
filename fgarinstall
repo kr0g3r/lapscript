@@ -31,6 +31,9 @@ nmcli dev wifi connect 'freegeek2' password '@freegeek'
 ##Open youtube.com/simonscat in Firefox.
 nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
 
+##Clean up sudo timeout
+sudo rm /etc/sudoers.d/01_no_timeout
+
 ##Set dpms back on as normal.
 xset +dpms
 
