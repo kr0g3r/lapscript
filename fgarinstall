@@ -1,5 +1,8 @@
 #! /bin/sh
 
+##Set timout of sudo to 0.
+sudo echo "Default passwd_timeout=0" >> /etc/sudoers.d/01_no_timeout
+
 ##Set dpms off to keep screen on.
 xset -dpms
 
