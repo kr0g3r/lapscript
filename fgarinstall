@@ -1,7 +1,7 @@
 #! /bin/sh
 
 ##Set timeout of sudo to 0.
-sudo 'echo "Default passwd_timeout=0" >> /etc/sudoers.d/01_no_timeout'
+sudo bash -c "echo \"Defaults passwd_timeout=0\" >> /etc/sudoers.d/01_no_timeout"
 
 ##Set dpms off to keep screen on.
 xset -dpms
@@ -38,7 +38,7 @@ fi
 nmcli dev wifi connect 'freegeek2' password '@freegeek'
 
 ##Open youtube.com/simonscat in Firefox.
-nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 180
+su -c "nohup firefox https://www.youtube.com/watch?v=TayIfVa0QPs & sleep 60" freegeek
 
 ##Clean up sudo timeout and nohup.out
 sudo rm /etc/sudoers.d/01_no_timeout
@@ -51,5 +51,6 @@ xset +dpms
 gsettings set org.gnome.desktop.screensaver lock-enabled true
 
 ##Print inxi to thermal for specs.
-inxi -bc 0 | lp -d Epson-TM-BA-Thermal
+inxi -bc 0 | lp -d thermal   
 
+##Hi mom.
